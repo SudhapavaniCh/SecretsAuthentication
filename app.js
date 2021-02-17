@@ -1,4 +1,5 @@
 //jshint esversion:6
+require('dotenv').config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
@@ -22,9 +23,8 @@ const userSchema= new mongoose.Schema({
     password:String
 });
 //Passing a long scret as string insted of two keys:check the documentaion of 
-//mongoose encryption. (Level2 authentication:Data Encryption)
-const secret="Thisismysecret";
-userSchema.plugin(encrypt,{secret:secret, encryptedFields:["password"]});
+//mongoose encryption. 
+userSchema.plugin(encrypt,{secret:process.env.SECRET, encryptedFields:["password"]});
 //mongoose model
 const User= new mongoose.model("User", userSchema);
 
